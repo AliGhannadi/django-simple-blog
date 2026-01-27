@@ -1,7 +1,11 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
-
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(unique=True)
+    def __str__(self):
+       return self.name
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(unique=True)
@@ -26,6 +30,11 @@ class Post(models.Model):
     
     category = models.ManyToManyField(
         Category,
+        related_name="posts",
+        blank=True
+    )
+    tag = models.ManyToManyField(
+        Tag,
         related_name="posts",
         blank=True
     )
