@@ -201,40 +201,32 @@
   <!-- Main Content -->
   <section class="main-area">
     <div class="container layout-grid">
-      
+   
       <!-- Left: Posts -->
       <div class="posts-list">
-        
-        <!-- Post 1 -->
-         {% for post in posts %}
+      {% for post in posts %}     
         <article class="post-item">
           <div class="post-meta-side">
             <div>{{post.author}} <span>👤</span></div>
-            <div>{{post.created_date|date:"Y/m/d"}}<span>📅</span></div>
+            <div>{{post.created_date|date:"Y/m/d"|default:"---"}} <span>📅</span></div>
             <div>1.2k Views <span>👁️</span></div>
             <div>06 Comments <span>💬</span></div>
           </div>
           <div class="post-content">
-            <!-- Placeholder for post image -->
             <div style="background: #1f243d; height: 240px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: var(--muted);">Post Image</div>
-            <!-- POST SECTION -->
             <h2 class="post-title"><a href="#">{{post.title}}</a></h2>
-            <p class="post-excerpt">
-              {{ post.content|truncatewords:30 }}
-            </p>
+            <p class="post-excerpt">{{post.content|truncatechars:50}}</p>
             <a href="#" class="btn">View More</a>
           </div>
-             {% endfor %}
         </article>
-
-        <!-- Pagination -->
+          {% endfor %}
         <div style="display: flex; justify-content: center; gap: 10px; margin-top: 40px;">
           <a href="#" class="btn" style="background: transparent; border: 1px solid var(--border); color: var(--muted);">Prev</a>
           <a href="#" class="btn">1</a>
           <a href="#" class="btn" style="background: transparent; border: 1px solid var(--border); color: var(--muted);">2</a>
           <a href="#" class="btn" style="background: transparent; border: 1px solid var(--border); color: var(--muted);">Next</a>
         </div>
-
+        
       </div>
 
       <!-- Right: Sidebar -->
