@@ -7,5 +7,6 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ('status', 'created_date')
     search_fields = ('title', 'content')
     
-
-admin.site.register(Category)
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}

@@ -1,9 +1,10 @@
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    prepopulated_fields = {"slug": ("name",)}
+    slug = models.SlugField(unique=True)
     class Meta:
       verbose_name_plural = "Categories"
     def __str__(self):
@@ -12,7 +13,11 @@ class Post(models.Model):
     # img
     title = models.CharField(max_length=200)
     content = models.TextField()
-    author = models.CharField(max_length=100)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="posts"
+    )
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     status = models.BooleanField(default=True)
