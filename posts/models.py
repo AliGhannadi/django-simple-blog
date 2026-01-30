@@ -14,7 +14,7 @@ class Category(models.Model):
     def __str__(self):
       return  self.name
 class Post(models.Model):
-    # img
+    img = models.ImageField(upload_to='blog_images/', blank=True, null=True)
     title = models.CharField(max_length=200)
     content = models.TextField()
     author = models.ForeignKey(

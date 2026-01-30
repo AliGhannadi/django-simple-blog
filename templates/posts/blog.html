@@ -89,7 +89,15 @@
           </div>
           <div class="post-content">
             <!-- Placeholder for post image -->
-            <div style="background: #1f243d; height: 240px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: var(--muted);">Post Image</div>
+             {% if post.img %}
+            <div style="background: #1f243d; height: 240px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: var(--muted);">
+              <img src="{{post.img.url}}" alt="{{ post.title }}">
+            </div>
+              {% else %}
+            <div style="background: #1f243d; height: 240px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: var(--muted);">
+              no image
+            </div>
+            {% endif %}
             <!-- POST SECTION -->
             <h2 class="post-title"><a href="{% url 'posts:single' pid=post.id %}">{{post.title}}</a></h2>
             <p class="post-excerpt">
