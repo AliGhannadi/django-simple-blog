@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load blog_tags %}
 {% block extra_head %}
 <style>
 .hero{padding:80px 0;text-align:center;background:linear-gradient(180deg,rgba(108,124,255,.1),transparent);border-bottom:1px solid var(--border)}
@@ -90,11 +91,11 @@
             <!-- Placeholder for post image -->
             <div style="background: #1f243d; height: 240px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: var(--muted);">Post Image</div>
             <!-- POST SECTION -->
-            <h2 class="post-title"><a href="#">{{post.title}}</a></h2>
+            <h2 class="post-title"><a href="{% url 'posts:single' pid=post.id %}">{{post.title}}</a></h2>
             <p class="post-excerpt">
               {{ post.content|truncatewords:30 }}
             </p>
-            <a href="#" class="btn">View More</a>
+            <a href="{% url 'posts:single' pid=post.id %}" class="btn">View More</a>
           </div>
         </article>
         {% endfor %}
@@ -112,7 +113,7 @@
       <!-- Right: Sidebar -->
       <aside class="sidebar-widgets">
         {% include 'posts/partials/sidebar/search.html' %}
-        {% include 'posts/partials/sidebar/latest_posts.html' %}
+        {% show_latest_posts 3 %}
         {% include 'posts/partials/sidebar/recent_comments.html' %}
         {% include 'posts/partials/sidebar/categories.html' %}
         {% include 'posts/partials/sidebar/tag_cloud.html' %}

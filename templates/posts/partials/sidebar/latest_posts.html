@@ -1,24 +1,13 @@
+
 <div class="widget">
   <h3 class="widget-title">Latest Posts</h3>
   <div class="mini-post">
     <div class="mini-thumb"></div>
     <div class="mini-details">
-      <h4><a href="#">Getting Started with Python</a></h4>
-      <span class="date">Jan 20, 2026</span>
-    </div>
-  </div>
-  <div class="mini-post">
-    <div class="mini-thumb"></div>
-    <div class="mini-details">
-      <h4><a href="#">CSS Grid vs Flexbox</a></h4>
-      <span class="date">Jan 18, 2026</span>
-    </div>
-  </div>
-  <div class="mini-post">
-    <div class="mini-thumb"></div>
-    <div class="mini-details">
-      <h4><a href="#">Deploying on Vercel</a></h4>
-      <span class="date">Jan 15, 2026</span>
+      {% for post in posts %}
+      <h4><a href="{% url 'posts:single' pid=post.id %}">{{post.title}}</a></h4>
+      <span class="date">{{post.created_date|date:"Y/m/d"}}</span>
+      {% endfor %}
     </div>
   </div>
 </div>
