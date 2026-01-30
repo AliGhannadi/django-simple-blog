@@ -2,7 +2,7 @@
   <h3 class="widget-title">Post Categories</h3>
   {% for category in categories %}
   <ul class="cat-list">
-    <li><a href="{% url 'posts:cat' category_slug=category.slug %}">{{category.name}}</a> <span>37</span></li>
+    <li><a href="{% url 'posts:cat' category_slug=category.slug %}">{{category.name}}</a> <span>{{category.post_count}}</span></li>
   </ul>
 {% endfor %}
 </div>
