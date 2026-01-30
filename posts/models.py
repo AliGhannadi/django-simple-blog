@@ -38,5 +38,6 @@ class Post(models.Model):
         related_name="posts",
         blank=True
     )
-    # tag
+    counted_views = models.IntegerField(default=0)
+    
     

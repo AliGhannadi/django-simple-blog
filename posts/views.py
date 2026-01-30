@@ -37,7 +37,9 @@ def post_by_category(request, category_slug):
     
 def single_post(request, pid):
     post = get_object_or_404(Post, id=pid)
-    categories = Category.objects.all
+    post.counted_views += 1
+    post.save()
+    categories = Category.objects.all()
     return render(request, 'posts/single.html',{
         'post': post,
         'categories': categories,
