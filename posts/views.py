@@ -2,15 +2,19 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post, Tag, Category
 def blog_home(request):
     posts = Post.objects.filter(status=1, created_date__lte=timezone.now()).order_by('-created_date')
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     tags = Tag.objects.all()
     categories = Category.objects.annotate(
         post_count=Count('posts', distinct=True)   
     )
     return render(request, 'posts/blog.html', {
-        'posts': posts, 
+        'posts': page_obj, 
         'tags': tags,
         'categories': categories    
     })

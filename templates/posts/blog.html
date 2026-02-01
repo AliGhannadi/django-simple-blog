@@ -30,6 +30,13 @@
 .tag-cloud{display:flex;flex-wrap:wrap;gap:8px}
 .tag{padding:6px 12px;background:rgba(255,255,255,0.05);border-radius:20px;font-size:12px;color:var(--muted)}
 .tag:hover{background:var(--accent);color:#fff}
+
+/* Pagination */
+.pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:60px}
+.page-link{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;background:var(--card);border:1px solid var(--border);color:var(--muted);font-weight:600;transition:.2s}
+.page-link:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.page-link.active{background:var(--gradient);color:white;border:none}
+.page-btn{width:auto;padding:0 20px}
 </style>
 {% endblock %}
 {% block content %}
@@ -109,11 +116,22 @@
         {% endfor %}
 
         <!-- Pagination -->
-        <div style="display: flex; justify-content: center; gap: 10px; margin-top: 40px;">
-          <a href="#" class="btn" style="background: transparent; border: 1px solid var(--border); color: var(--muted);">Prev</a>
-          <a href="#" class="btn">1</a>
-          <a href="#" class="btn" style="background: transparent; border: 1px solid var(--border); color: var(--muted);">2</a>
-          <a href="#" class="btn" style="background: transparent; border: 1px solid var(--border); color: var(--muted);">Next</a>
+        <div class="pagination">
+          {% if posts.has_previous %}
+          <a href="?page={{posts.previous_page_number}}" class="page-link page-btn">Previous</a>
+          {% endif %}
+          
+          {% for i in posts.paginator.page_range %}
+             {% if posts.number == i %}
+                 <span class="page-link active">{{ i }}</span>
+             {% else %}
+                 <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+             {% endif %}
+           {% endfor %}
+          
+          {% if posts.has_next %}
+          <a href="?page={{posts.next_page_number}}" class="page-link page-btn">Next</a>
+          {% endif %}
         </div>
 
       </div>
