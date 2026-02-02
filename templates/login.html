@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<style>
+  /* Reuse styling from contact.html for consistency */
+  .hero {
+    padding: 80px 0;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(108, 124, 255, .1), transparent);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 60px;
+  }
+
+  .auth-container {
+    max-width: 500px;
+    margin: 0 auto 80px;
+    padding: 0 20px;
+  }
+
+  .auth-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: white;
+    font-family: inherit;
+    font-size: 15px;
+    transition: 0.2s;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(108, 124, 255, 0.05);
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 10px;
+  }
+
+  .submit-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+  }
+  
+  .auth-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  
+  .auth-footer a {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  
+  .auth-footer a:hover {
+    text-decoration: underline;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <span class="badge">Welcome Back</span>
+    <h1>Login</h1>
+    <p>Access your account and manage your blog posts.</p>
+  </div>
+</section>
+
+<!-- Login Form -->
+<div class="auth-container">
+  <div class="auth-card">
+    <form action="{% url 'accounts:login' %}" method="POST">
+        {% for message in messages %} 
+        {{message}}
+        {% endfor %}
+      {% csrf_token %}
+      
+      <div class="form-group">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+      </div>
+
+      <button type="submit" class="submit-btn">Login</button>
+      
+      <div class="auth-footer">
+        Don't have an account? <a href="/register/">Sign up</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
