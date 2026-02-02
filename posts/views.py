@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.utils import timezone
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.db.models import Count, Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Post, Tag, Category
+from django.contrib import messages
+from .models import Post, Tag, Category, ContactMessage
+from .forms import ContactForm
 def blog_home(request):
     posts = Post.objects.filter(status=1, created_date__lte=timezone.now()).order_by('-created_date')
     paginator = Paginator(posts, 10)
@@ -77,4 +79,18 @@ def blog_search(request):
         'tags': tags,
         'search_query': request.GET.get('s', '')
     })
+    
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request,messages.SUCCESS,'Your message has been sent. We will contact you via email as soon as possible.')
+        else:
+            messages.add_message(request,messages.ERROR, 'Failed to sent message')
+    
+    form = ContactForm()
+    return render(request, 'contact.html', {"form": form})
+            
+    
         

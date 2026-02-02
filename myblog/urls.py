@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('posts.urls')),
+    path('captcha/', include('captcha.urls')),
 ]
 # This allows Django to serve media files during development
 if settings.DEBUG:
