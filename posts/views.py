@@ -52,6 +52,7 @@ def single_post(request, pid):
     post = get_object_or_404(Post, id=pid)
     post.counted_views += 1
     post.save()
+    tags = Tag.objects.all()
     categories = Category.objects.annotate(
         post_count=Count('posts', distinct=True)   
     )
@@ -75,6 +76,7 @@ def single_post(request, pid):
         'categories': categories,
         'form': form,
         'comment_count': active_comments.count(),
+        'tags': tags,
         
     })
     
