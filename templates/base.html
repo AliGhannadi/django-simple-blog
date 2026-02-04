@@ -38,10 +38,8 @@
       <div class="container flex between">
         <a href="#" class="brand">My<span>Blog</span></a>
         <div class="nav-menu">
-          <a href="#">Home</a>
-          <a href="#">About</a>
-          <a href="#">Blog</a>
-          <a href="#">Contact</a>
+          <a href="/">Home</a>
+          <a href="{% url 'blog:contact' %}">Contact</a>
           {% if request.user.is_authenticated %}
           <li>Logged in as {{request.user.username}}</li>
           <a href="{% url 'accounts:logout' %}">logout</a>
@@ -61,17 +59,14 @@
       <div class="footer-grid">
         <div>
           <h6>About Us</h6>
-          <p>We are a passionate team dedicated to bringing you the best content in technology, design, and lifestyle.</p>
+          <p>We are a passionate team dedicated to bringing you the best content in technology.</p>
         </div>
         <div>
           <h6>Quick Links</h6>
           <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="#">Services</a></li>
             <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a>
-          <a href="/login/" class="btn">Login</a>
-          <a href="/register/" class="btn">Sign Up</a></li>
+            <li><a href="{% url 'blog:contact' %}">Contact</a>
           </ul>
         </div>
         <div>
@@ -82,17 +77,9 @@
             <a href="#" style="margin-right:10px">Instagram</a>
           </div>
         </div>
-        <div>
-          <h6>Newsletter</h6>
-          <p>Stay updated with our latest trends</p>
-          <div class="search-form">
-            <input type="email" class="search-input" placeholder="Email Address">
-            <button class="btn">→</button>
-          </div>
-        </div>
       </div>
       <div class="footer-bottom">
-        <p>Copyright © 2026 MyBlog. All rights reserved.</p>
+        <p>Copyright © 2026 MyBlog. All rights reserved. Made with ❤️ by <a href="https://github.com/AliGhannadi">Ali Ghanadi</a></p>
       </div>
     </div>
   </footer>
