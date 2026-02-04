@@ -161,16 +161,6 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ```
 
-## Development Tips
-- Template tags are in [posts/templatetags/blog_tags.py](file:///g:/Python/Django/blog/posts/templatetags/blog_tags.py).
-- Uses a consistent design system via CSS variables in [base.html](file:///g:/Python/Django/blog/templates/base.html).
-- Pagination, widgets, and layout are unified across blog pages.
-
-## Testing
-Run Django tests:
-```bash
-python manage.py test
-```
 
 ## Deployment Notes
 - Set `DEBUG = False` and configure `ALLOWED_HOSTS` in production.
@@ -178,15 +168,5 @@ python manage.py test
 - Configure a production-grade database (PostgreSQL, MySQL, etc.) as needed.
 - Configure static files (STATIC_ROOT) and collectstatic.
 
-## Troubleshooting
-- Namespaced URLs: If you see `NoReverseMatch` errors for `blog:*`, ensure `myblog/urls.py` includes `namespace='blog'` when including `posts.urls` (see Configuration section).
-- Contact form captcha: If submissions always fail, include captcha fields in the template or remove the captcha field from `ContactForm`.
-- Comments not visible: Approve comments in admin or change default to `is_active=True` if immediate display is desired.
-
 ## License
-Add your chosen license here (MIT, Apache-2.0, etc.).
-
-## Acknowledgements
-- Django community and documentation
-- django-simple-captcha
-- Google Fonts (Inter)
+MIT License
