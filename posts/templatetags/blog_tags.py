@@ -1,10 +1,16 @@
 from django import template
-from ..models import Post
-
+from ..models import Comment, Post
 
 register = template.Library()
 
 @register.inclusion_tag('posts/partials/sidebar/latest_posts.html')
-def show_latest_posts(count=3):
-    posts = Post.objects.all().order_by('-id')[:count]
+def show_latest_posts():
+    posts = Post.objects.all().order_by('-id')[:3]
     return {'posts': posts}
+
+
+
+@register.inclusion_tag('posts/partials/sidebar/recent_comments.html')
+def show_recent_comments(count=3):
+    comments = Comment.objects.filter(is_active=1).order_by('-created_at')[:3]
+    return {'comments': comments}
