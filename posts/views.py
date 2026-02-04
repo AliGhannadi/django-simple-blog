@@ -15,7 +15,7 @@ def blog_home(request):
     categories = Category.objects.annotate(
         post_count=Count('posts', distinct=True)   
     )
-    return render(request, 'posts/blog.html', {
+    return render(request, 'blog/blog.html', {
         'posts': page_obj, 
         'tags': tags,
         'categories': categories    
@@ -27,7 +27,7 @@ def post_by_tag(request, tag_slug):
     categories = Category.objects.annotate(
         post_count=Count('posts', distinct=True)   
     )
-    return render(request, 'posts/blog.html', {
+    return render(request, 'blog/blog.html', {
         'posts': posts,
         'current_tag': tag,
         'tags': tags,
@@ -41,7 +41,7 @@ def post_by_category(request, category_slug):
     categories = Category.objects.annotate(
         post_count=Count('posts', distinct=True)   
     )
-    return render(request, 'posts/blog.html', {
+    return render(request, 'blog/blog.html', {
         'posts': posts,
         'current_category': category,
         'categories': categories       
@@ -63,14 +63,14 @@ def single_post(request, pid):
             comment.user_comment = request.user
             comment.save()
             messages.add_message(request,messages.SUCCESS,'Your comment has been submitted. It will appear after the admin confirmation.')
-            return redirect('posts:single', post.id)
+            return redirect('blog:single', post.id)
         else:
             messages.add_message(request,messages.ERROR,'Your comment has not been submitted.')
     else:
      form = CommentForm()
     
     active_comments = post.comments.filter(is_active=True)    
-    return render(request, 'posts/single.html',{
+    return render(request, 'blog/single.html',{
         'post': post,
         'categories': categories,
         'form': form,
@@ -90,7 +90,7 @@ def blog_search(request):
         post_count=Count('posts', distinct=True)
     )
     tags = Tag.objects.all()
-    return render(request, 'posts/blog.html', {
+    return render(request, 'blog/blog.html', {
         'posts': posts,
         'categories': categories,
         'tags': tags,

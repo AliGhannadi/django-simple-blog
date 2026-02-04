@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import blog_home, post_by_tag, post_by_category, single_post, blog_search, contact
-app_name = 'posts'
+app_name = 'blog'
 urlpatterns = [
     path('', blog_home, name='blog_home'),
     path('tag/<slug:tag_slug>/', post_by_tag, name='tag'),

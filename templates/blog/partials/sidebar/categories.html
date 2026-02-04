@@ -1,0 +1,8 @@
+<div class="widget">
+  <h3 class="widget-title">Post Categories</h3>
+  {% for category in categories %}
+  <ul class="cat-list">
+    <li><a href="{% url 'blog:cat' category_slug=category.slug %}">{{category.name}}</a> <span>{{category.post_count}}</span></li>
+  </ul>
+{% endfor %}
+</div>

@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
     last_name = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=20, blank=False, null=False)
     profile_picture = models.ImageField(upload_to='profiles/', blank=True, null=True)
+    biography = models.TextField(default="No bio")
     def __str__(self):
         return self.username
     
