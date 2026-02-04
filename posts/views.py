@@ -5,7 +5,7 @@ from django.db.models import Count, Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from .models import Post, Tag, Category, ContactMessage
-from .forms import ContactForm
+from .forms import ContactForm, CommentForm
 def blog_home(request):
     posts = Post.objects.filter(status=1, created_date__lte=timezone.now()).order_by('-created_date')
     paginator = Paginator(posts, 10)
@@ -55,9 +55,26 @@ def single_post(request, pid):
     categories = Category.objects.annotate(
         post_count=Count('posts', distinct=True)   
     )
+    if request.method == 'POST' and request.user.is_authenticated:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.user_comment = request.user
+            comment.save()
+            messages.add_message(request,messages.SUCCESS,'Your comment has been submitted. It will appear after the admin confirmation.')
+            return redirect('posts:single', post.id)
+        else:
+            messages.add_message(request,messages.ERROR,'Your comment has not been submitted.')
+    else:
+     form = CommentForm()
+    
+    active_comments = post.comments.filter(is_active=True)    
     return render(request, 'posts/single.html',{
         'post': post,
         'categories': categories,
+        'form': form,
+        'comment_count': active_comments.count(),
         
     })
     

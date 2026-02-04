@@ -48,5 +48,19 @@ class ContactMessage(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
        return f"{self.name} - {self.subject}"
-    
-    
+   
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
+    user_comment = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="user_comment"
+    )
+    content = models.TextField()
+    is_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)

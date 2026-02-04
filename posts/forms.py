@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import ContactMessage
+from .models import ContactMessage, Comment
 from django.forms import ModelForm
 from captcha.fields import CaptchaField
 class ContactForm(forms.ModelForm):
@@ -24,5 +24,17 @@ class ContactForm(forms.ModelForm):
             'message': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Your message here...'
+            }),
+        }
+        
+class CommentForm(forms.ModelForm):
+    captcha = CaptchaField()
+    class Meta:
+        model = Comment
+        fields = ['content', 'captcha']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': '...',
             }),
         }

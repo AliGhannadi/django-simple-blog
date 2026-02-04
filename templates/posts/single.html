@@ -206,35 +206,22 @@
         <div class="author-avatar"></div>
         <div class="author-info">
           <h4>{{post.author}}</h4>
-          {% comment %} <p>
-            Short bio of the author. A few lines about experience or interests.
-          </p> {% endcomment %}
+          <p>Senior Writer & Content Creator. Loves technology, design, and exploring new ideas.</p>
         </div>
       </div>
+      
+      <!-- Include Comments -->
+      {% include 'posts/comment.html' %}
 
     </article>
 
-
     <!-- Right: Sidebar -->
     <aside class="sidebar-widgets">
-
-      <div class="widget">
-        <h3 class="widget-title">Search</h3>
-        <input type="text" placeholder="Search..." style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:#1f243d;color:white">
-      </div>
-
-      <div class="widget">
-        <h3 class="widget-title">Latest Posts</h3>
-        {% show_latest_posts 3 %}
-      </div>
-
-      <div class="widget">
-          <h3 class="widget-title">Categories</h3>
-        {% for category in categories %}
-        <a href="{% url 'posts:cat' category_slug=category.slug %}">{{category.name}}</a> <br>
-        {% endfor %}
-      </div>
-
+      {% include 'posts/partials/sidebar/search.html' %}
+      {% include 'posts/partials/sidebar/categories.html' %}
+      {% show_latest_posts 3 %}
+      {% include 'posts/partials/sidebar/recent_comments.html' %}
+      {% include 'posts/partials/sidebar/tag_cloud.html' %}
     </aside>
 
   </div>
