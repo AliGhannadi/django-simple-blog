@@ -70,6 +70,14 @@
       {% empty %}
       <div class="post-tags"><span class="tag">No tags</span></div>
       {% endfor %}
+      <!-- Author Box -->
+      <div class="author-box">
+        <div class="author-avatar"></div>
+        <div class="author-info">
+          <h4>{{post.author}}</h4>
+          <p>{{post.author.biography}}</p>
+        </div>
+      </div>
       <!-- Include Comments -->
       {% include 'blog/comment.html' %}
     </article>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#0f1220; --card:#15182b; --muted:#a2a8c7; --text:#e9ecff; --accent:#6c7cff; --accent-hover:#5a6ae6; --accent-2:#89f0ff; --border:rgba(255,255,255,.08); --gradient:linear-gradient(135deg,var(--accent),var(--accent-2)); }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,sans-serif;background:radial-gradient(1200px 600px at 50% 0%,#1a1e38,#0b0e1c),var(--bg);color:var(--text);line-height:1.6}
+    a{text-decoration:none;color:inherit;transition:.2s}
+    a:hover{color:var(--accent)}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    .btn{display:inline-block;padding:12px 24px;background:var(--accent);color:white;border-radius:8px;font-weight:600;font-size:14px;transition:.2s;border:none;cursor:pointer}
+    .btn:hover{background:var(--accent-hover);transform:translateY(-1px)}
+    .hero{padding:80px 0;text-align:center;background:linear-gradient(180deg,rgba(108,124,255,.1),transparent);border-bottom:1px solid var(--border);margin-bottom:60px}
+    .badge{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1px}
+
+    .profile-grid{display:grid;grid-template-columns:1fr;gap:40px;margin-bottom:100px}
+    @media(min-width:992px){.profile-grid{grid-template-columns:1.5fr 1fr}}
+
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px}
+    .card h3{margin:0 0 20px;font-size:20px;font-weight:800;color:white}
+    .card p.desc{margin:0 0 20px;color:var(--muted);font-size:14px}
+
+    .form-group{margin-bottom:20px}
+    .form-label{display:block;margin-bottom:8px;font-weight:600;color:white}
+    .form-control{width:100%;padding:14px;background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:8px;color:white;font-family:inherit;font-size:15px;transition:.2s}
+    .form-control:focus{outline:none;border-color:var(--accent);background:rgba(108,124,255,0.05)}
+
+    .avatar-row{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+    .avatar{width:64px;height:64px;border-radius:50%;background:#2a2e45}
+    .small{font-size:13px;color:var(--muted)}
+    .avatar{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.avatar img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="container">
+      <span class="badge">Account</span>
+      <h1>Your Profile</h1>
+      <p class="small">Manage your account information and security.</p>
+    </div>
+  </section>
+
+  <div class="container profile-grid">
+    <div class="card">
+      <h3>Profile Information</h3>
+      <p class="desc">Update your personal details and profile picture.</p>
+      {% for message in messages %}
+      {{message}}
+      {% endfor %}
+      <div class="avatar-row">
+        <div class="avatar">
+        {% if user.profile_picture %}
+               <img src="{{user.profile_picture.url}}" alt="{{ post.title }}">
+        {% endif%}
+        </div>
+        <div class="small">Current profile picture preview</div>
+
+      </div>
+
+      <form action="{% url 'accounts:profile' %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+        <div class="form-group">
+          <label class="form-label" for="first_name">First Name</label>
+          {{form.first_name}}
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="last_name">Last Name</label>
+          {{form.last_name}}
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="phone_number">Phone Number</label>
+          {{form.phone_number}}
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="biography">Biography</label>
+          {{form.biography}}
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="profile_picture">Profile Picture</label>
+          {{form.profile_picture}}
+        </div>
+        <button class="btn" type="submit">Save Changes</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Change Password</h3>
+      <p class="desc">Update your account password to keep it secure.</p>
+
+      <form action="/accounts/password/change/" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="current_password">Current Password</label>
+          <input class="form-control" type="password" id="current_password" name="current_password" placeholder="Enter current password" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="new_password">New Password</label>
+          <input class="form-control" type="password" id="new_password" name="new_password" placeholder="Enter new password" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="confirm_password">Confirm New Password</label>
+          <input class="form-control" type="password" id="confirm_password" name="confirm_password" placeholder="Re-enter new password" />
+        </div>
+        <button class="btn" type="submit">Update Password</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
