@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, UpdateUserInformation
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -41,3 +41,19 @@ def logout_view(request):
     if request.user.is_authenticated:
      logout(request)
     return redirect('/')
+
+@login_required
+def profile_view(request):
+    if request.method == 'POST':
+      form = UpdateUserInformation(request.POST,request.FILES,instance=request.user)
+      if form.is_valid():
+        form.save()
+        messages.add_message(request,messages.SUCCESS,'User information updated successfully')
+        return redirect('accounts:profile')
+      else:
+        messages.add_message(request,messages.ERROR,'Failed to update informatiuon')
+    else:
+     form = UpdateUserInformation(instance=request.user) 
+     
+    context = {'form': form}
+    return render(request, 'profile.html', context)
