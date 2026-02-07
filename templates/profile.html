@@ -60,11 +60,13 @@
 
   <div class="container profile-grid">
     <div class="card">
+    {% for message in messages %}
+    {% if 'update_profile' in message.tags %}
+    {{message}}
+    {% endif %}
+    {% endfor %}
       <h3>Profile Information</h3>
       <p class="desc">Update your personal details and profile picture.</p>
-      {% for message in messages %}
-      {{message}}
-      {% endfor %}
       <div class="avatar-row">
         <div class="avatar">
         {% if user.profile_picture %}
@@ -79,46 +81,59 @@
       {% csrf_token %}
         <div class="form-group">
           <label class="form-label" for="first_name">First Name</label>
-          {{form.first_name}}
+          {{info_form.first_name}}
+          {{info_form.first_name.errors}}
         </div>
         <div class="form-group">
           <label class="form-label" for="last_name">Last Name</label>
-          {{form.last_name}}
+          {{info_form.last_name}}
+          {{info_form.last_name.errors}}
         </div>
         <div class="form-group">
           <label class="form-label" for="phone_number">Phone Number</label>
-          {{form.phone_number}}
+          {{info_form.phone_number}}
+          {{info_form.phone_number.errors}}
         </div>
         <div class="form-group">
           <label class="form-label" for="biography">Biography</label>
-          {{form.biography}}
+          {{info_form.biography}}
+          {{info_form.biography.errors}}
         </div>
         <div class="form-group">
           <label class="form-label" for="profile_picture">Profile Picture</label>
-          {{form.profile_picture}}
+          {{info_form.profile_picture}}
+          {{info_form.profile_picture.errors}}
         </div>
-        <button class="btn" type="submit">Save Changes</button>
+        <button class="btn" type="submit" name="update_info">Save Changes</button>
       </form>
     </div>
 
     <div class="card">
       <h3>Change Password</h3>
       <p class="desc">Update your account password to keep it secure.</p>
-
-      <form action="/accounts/password/change/" method="POST">
+    {% for message in messages %}
+    {% if 'update_pw' in message.tags %}
+    {{message}}
+    {% endif %}
+    {% endfor %}
+      <form action="{% url 'accounts:profile' %}" method="POST">
+        {% csrf_token %}
         <div class="form-group">
           <label class="form-label" for="current_password">Current Password</label>
-          <input class="form-control" type="password" id="current_password" name="current_password" placeholder="Enter current password" />
+          {{pw_form.old_password}}
+          {{pw_form.old_password.errors}}
         </div>
         <div class="form-group">
           <label class="form-label" for="new_password">New Password</label>
-          <input class="form-control" type="password" id="new_password" name="new_password" placeholder="Enter new password" />
+         {{pw_form.new_password1}}
+         {{pw_form.new_password1.errors}}
         </div>
         <div class="form-group">
           <label class="form-label" for="confirm_password">Confirm New Password</label>
-          <input class="form-control" type="password" id="confirm_password" name="confirm_password" placeholder="Re-enter new password" />
+         {{pw_form.new_password2}}
+         {{pw_form.new_password2.errors}}
         </div>
-        <button class="btn" type="submit">Update Password</button>
+        <button class="btn" type="submit" name="update_pw">Update Password</button>
       </form>
     </div>
   </div>

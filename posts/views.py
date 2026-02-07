@@ -18,7 +18,7 @@ def blog_home(request):
     return render(request, 'blog/blog.html', {
         'posts': page_obj, 
         'tags': tags,
-        'categories': categories    
+        'categories': categories,
     })
 def post_by_tag(request, tag_slug):
     tag = get_object_or_404(Tag, slug=tag_slug)

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from .forms import CustomUserCreationForm, UpdateUserInformation
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -44,16 +44,25 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
+    info_form = UpdateUserInformation(instance=request.user)
+    pw_form = PasswordChangeForm(request.user)
     if request.method == 'POST':
-      form = UpdateUserInformation(request.POST,request.FILES,instance=request.user)
-      if form.is_valid():
-        form.save()
-        messages.add_message(request,messages.SUCCESS,'User information updated successfully')
-        return redirect('accounts:profile')
-      else:
-        messages.add_message(request,messages.ERROR,'Failed to update informatiuon')
-    else:
-     form = UpdateUserInformation(instance=request.user) 
-     
-    context = {'form': form}
+      if 'update_info' in request.POST:
+        info_form = UpdateUserInformation(request.POST,request.FILES,instance=request.user)
+        if info_form.is_valid():
+          info_form.save()
+          messages.success(request, 'Profile Updated.', extra_tags='update_profile')
+          return redirect('accounts:profile')
+        else:
+          messages.error(request, 'An error occured.', extra_tags='update_profile')
+      elif 'update_pw' in request.POST:
+        pw_form = PasswordChangeForm(request.user, request.POST)
+        if pw_form.is_valid():
+          user = pw_form.save()
+          update_session_auth_hash(request, user)
+          messages.success(request, 'Password successfully changed.', extra_tags='update_pw')
+          return redirect('accounts:profile')
+        else:
+          messages.error(request, 'An error occured.', extra_tags='update_pw')
+    context = {'pw_form': pw_form, 'info_form': info_form}
     return render(request, 'profile.html', context)

@@ -40,6 +40,10 @@ class Post(models.Model):
     )
     counted_views = models.IntegerField(default=0)
     
+    @property
+    def active_comment_count(self):
+        return self.comments.filter(is_active=1).count()
+    
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
