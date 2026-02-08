@@ -185,8 +185,3 @@ python manage.py test
 
 ## License
 MIT License
-
-## Acknowledgements
-- Django community and documentation
-- django-simple-captcha
-- Google Fonts (Inter)
