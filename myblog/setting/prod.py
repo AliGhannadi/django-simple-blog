@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-%7x(e0hnjf)d=o%0(eak654q+bn=2l+b@@feaiw(ukf_&(u7l9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 CSRF_COOKIE_SECURE = True
