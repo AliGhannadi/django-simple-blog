@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('posts', '0008_contactmessage_remove_category_count_of_posts'),
+        ('blog', '0008_contactmessage_remove_category_count_of_posts'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('name', models.TextField()),
                 ('content', models.TextField()),
                 ('is_active', models.BooleanField()),
-                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='post', to='posts.post')),
+                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='post', to='blog.post')),
                 ('user_comment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_comment', to=settings.AUTH_USER_MODEL)),
             ],
         ),
