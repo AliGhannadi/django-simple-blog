@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     'blog',
     'accounts',
     'captcha',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -18,11 +18,19 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.sitemaps.views import sitemap
+from blog.sitemaps import StaticViewSitemap, BlogSiteMap
+sitemaps = {
+    'static': StaticViewSitemap,
+    'blog': BlogSiteMap,
+}
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
     path('accounts/', include('accounts.urls')),
     path('captcha/', include('captcha.urls')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps} ,name='django.contrib.sitemaps.views.sitemap')
+    
 ]
 # This allows Django to serve media files during development
 if settings.DEBUG:
